@@ -1,0 +1,4 @@
+
+@host=https://localhost:7130
+
+GET {{host}}/customer

@@ -1,0 +1,108 @@
+﻿@page
+@model Details
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Detail</h1>
+
+<div>
+    <h4>CustomerModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderModel.Identification)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderModel.Identification)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderModel.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderModel.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderModel.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderModel.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderModel.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderModel.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderModel.Total)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderModel.Total)
+        </dd>
+    </dl>
+
+    <div class="row">
+        <div class="col-md-8">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderProductModel[0].ProductId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderProductModel[0].ProductName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderProductModel[0].Quantity)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderProductModel[0].Price)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderProductModel[0].Total)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.OrderProductModel.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.OrderProductModel[i].ProductId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.OrderProductModel[i].ProductName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.OrderProductModel[i].Quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.OrderProductModel[i].Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.OrderProductModel[i].Total)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script src="~/js/order.js" asp-append-version="true"></script>
+    }
+    }

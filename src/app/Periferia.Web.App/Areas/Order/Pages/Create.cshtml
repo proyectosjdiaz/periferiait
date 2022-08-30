@@ -1,0 +1,117 @@
+﻿@page
+@model CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Order</h4>
+<hr />
+<form method="post">
+    <div class="row">
+        <div class="col-md-4">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="OrderModel.Identification" class="control-label"></label>
+                <input asp-for="OrderModel.Identification" class="form-control" />
+                <span asp-validation-for="OrderModel.Identification" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderModel.FirstName" class="control-label"></label>
+                <input asp-for="OrderModel.FirstName" class="form-control" />
+                <span asp-validation-for="OrderModel.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderModel.LastName" class="control-label"></label>
+                <input asp-for="OrderModel.LastName" class="form-control" />
+                <span asp-validation-for="OrderModel.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderModel.Phone" class="control-label"></label>
+                <input asp-for="OrderModel.Phone" class="form-control" />
+                <span asp-validation-for="OrderModel.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="input_Total" class="control-label"></label>
+                @Html.HiddenFor(model => model.OrderModel.Total)
+                <input id="input_Total" name="input_Total" class="form-control text-end" readonly value="@(String.Format("{0:C2}", 0d))" />
+                <span asp-validation-for="OrderModel.Total" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderProductModel[0].ProductId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderProductModel[0].ProductName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderProductModel[0].Quantity)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderProductModel[0].Price)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderProductModel[0].Total)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.OrderProductModel.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.HiddenFor(modelItem => Model.OrderProductModel[i].ProductId)
+                                @Html.DisplayFor(modelItem => Model.OrderProductModel[i].ProductId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.OrderProductModel[i].ProductName)
+                            </td>
+                            <td>
+                                @*@Html.HiddenFor(modelItem => Model.OrderProductModel[i].Quantity)*@
+                                @Html.DropDownListFor(modelItem => Model.OrderProductModel[i].Quantity,Model.SelectListQuantity,null,new{onchange="calculate(this)",data_ix=@i})
+                            </td>
+                            <td>
+                                @Html.HiddenFor(modelItem => Model.OrderProductModel[i].Price)
+                                @Html.DisplayFor(modelItem => Model.OrderProductModel[i].Price)
+                            </td>
+                            <td>
+                                @Html.HiddenFor(modelItem => Model.OrderProductModel[i].Total)
+                                <span id=@($"span_{i}__Total")>
+                                    @Html.DisplayFor(modelItem => Model.OrderProductModel[i].Total)
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</form>
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script src="~/js/order.js" asp-append-version="true"></script>
+    }
+    }
